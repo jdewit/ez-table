@@ -1,16 +1,30 @@
 table.table-simple td:first-child {
   width: 50px;
 }
+table.table-simple td:last-child {
+  width: 125px;
+}
+table.table-simple th {
+  text-align: center;
+}
 table.table-simple th a {
   color: #000;
+  cursor: pointer;
   text-decoration: none;
+}
+table.table-simple td:first-child,
+table.table-simple th:first-child {
+  text-align: center;
+}
+table.table-simple tfoot {
+  text-align: center;
+}
+table.table-simple tfoot input[type="checkbox"] {
+  float: left;
+  margin: 7.5px 20px 0 10px;
 }
 table.table-simple .caret.caret-up {
   border-top: 0 dotted;
   border-bottom: 4px solid #000;
   content: "";
-}
-table.table-simple tfoot input[type="checkbox"] {
-  float: left;
-  margin: 7.5px 20px 0 10px;
 }
