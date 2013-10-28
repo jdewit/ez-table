@@ -13,7 +13,14 @@ Features
 - sorting 
 - Twitter bootstrap styling
 
+Demo
+----
 
+http://embed.plnkr.co/upx6c3/preview
+
+
+Usage 
+-----
 
 ```html
 <table s-table="users">
