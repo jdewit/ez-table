@@ -134,7 +134,8 @@ describe('simple-table', function() {
     });
 
     expect(el.next().hasClass('well')).toBe(true);
-    expect(el.next().find('button:first-child').text()).toBe('Delete');
+    expect(el.next().find('button:first-child').text()).toBe('Edit');
+    expect(el.next().find('button:nth-child(2)').text()).toBe('Delete');
   });
 
   it('Should toggle off all rows on repeat toggle all click', function() {

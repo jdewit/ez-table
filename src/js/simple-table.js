@@ -50,6 +50,7 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
 
       element.after(
         '<div ng-show="showBatchActions" class="well">' +
+          '<button class="btn btn-sm btn-default" ng-click="batchEdit()"><i class="icon-pencil"></i>Edit</button>' +
           '<button class="btn btn-sm btn-danger" ng-click="batchDelete()"><i class="icon-remove"></i>Delete</button>' +
         '</div>'
       );
