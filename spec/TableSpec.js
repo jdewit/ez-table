@@ -69,10 +69,18 @@ describe('simple-table', function() {
 
   it('should sort items on header click', function() {
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Joe');
+
     el.find('thead tr:first-child th:nth-child(2) a').click();
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Bob');
+
     el.find('thead tr:first-child th:nth-child(2) a').click();
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Zoe');
+
+    el.find('thead tr:first-child th:nth-child(3) a').click();
+    expect(el.find('tbody tr:first-child td:nth-child(3)').text()).toBe('Barker');
+
+    el.find('thead tr:first-child th:nth-child(3) a').click();
+    expect(el.find('tbody tr:first-child td:nth-child(3)').text()).toBe('Smith');
   });
 
   it('should be able to toggle filter', function() {
