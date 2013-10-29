@@ -10,21 +10,22 @@ describe('simple-table', function() {
         '<table s-table="users" data-count="6">' +
           '<tr ng-repeat="user in items">' +
             '<td><input type="checkbox" ng-model="user.selected"/></td>' +
-            '<td title="Name">{{ user.name }}</td>' +
+            '<td data-title="First Name" data-field="firstName">{{ user.firstName }}</td>' +
+            '<td data-title="Last Name" data-field="lastName">{{ user.lastName }}</td>' +
             '<td><a><i class="icon-pencil">Edit</a></td>' +
           '</tr>' +
         '</table>'
       );
 
       scope.users = [
-        {name: "Joe"},
-        {name: "Bob"},
-        {name: "Pete"},
-        {name: "Don"},
-        {name: "Bobby"},
-        {name: "Joey"},
-        {name: "Zoe"},
-        {name: "Tom"}
+        {firstName: "Joe", lastName: "Smith"},
+        {firstName: "Bob", lastName: "Jones"},
+        {firstName: "Pete", lastName: "Barker"},
+        {firstName: "Don", lastName: "Draper"},
+        {firstName: "Bobby", lastName: "Simpson"},
+        {firstName: "Joey", lastName: "Diaz"},
+        {firstName: "Zoe", lastName: "Dejawhatever"},
+        {firstName: "Tom", lastName: "Jones"}
       ];
 
       $compile(el)(scope);
@@ -39,8 +40,9 @@ describe('simple-table', function() {
 
   it('it renders table header automatically', function() {
     expect(el.find('thead th:first-child input').length).toBe(1);
-    expect(el.find('thead th:nth-child(2) a').text()).toBe('Name');
-    expect(el.find('thead th:nth-child(3)').text()).toBe('');
+    expect(el.find('thead th:nth-child(2) a').text()).toBe('First Name');
+    expect(el.find('thead th:nth-child(3) a').text()).toBe('Last Name');
+    expect(el.find('thead th:nth-child(4)').text()).toBe('');
   });
 
   it('it renders table footer automatically', function() {
@@ -67,9 +69,9 @@ describe('simple-table', function() {
 
   it('should sort items on header click', function() {
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Joe');
-    el.find('thead a:first-child').click();
+    el.find('thead tr:first-child th:nth-child(2) a').click();
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Bob');
-    el.find('thead a:first-child').click();
+    el.find('thead tr:first-child th:nth-child(2) a').click();
     expect(el.find('tbody tr:first-child td:nth-child(2)').text()).toBe('Zoe');
   });
 
@@ -84,14 +86,15 @@ describe('simple-table', function() {
   it('should be able to filter the list', function() {
     el.find('.filter-toggle').click();
 
-    el.find('thead .form-control').autotype('Bo').trigger('input');
+    el.find('thead tr:nth-child(2) th:nth-child(2) .form-control').autotype('Bo').trigger('input');
     rows = el.find('tbody tr');
     expect(rows.length).toBe(2);
 
-    el.find('thead .form-control').autotype('bby').trigger('input');
+    el.find('thead tr:nth-child(2) th:nth-child(2) .form-control').autotype('bby').trigger('input');
     rows = el.find('tbody tr');
     expect(rows.length).toBe(1);
-    el.find('thead .form-control').autotype('{back}{back}{back}{back}{back}').trigger('input');
+
+    el.find('thead tr:nth-child(2) th:nth-child(2) .form-control').autotype('{back}{back}{back}{back}{back}').trigger('input');
   });
 
   it('should update table on pagination', function() {

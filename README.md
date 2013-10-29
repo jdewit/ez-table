@@ -27,6 +27,7 @@ Usage
   <tr ng-repeat="user in items">
     <td><input type="checkbox" ng-model="user.selected"/></td>
     <td data-title="Name">{{ user.name }}</td>
+    <td data-title="Display Name" data-field="fullName">{{ user.fullName }}</td>
     <td><a class="btn" ng-click="editUser()">Edit</a></td>
   </tr>
 </table>

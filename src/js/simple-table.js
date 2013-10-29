@@ -1,4 +1,4 @@
-angular.module('simpleTable', []).directive('sTable', ['$filter', '$compile', function($filter, $compile) {
+angular.module('simpleTable', []).directive('sTable', ['$filter', function($filter) {
   return {
 		restrict: 'A',
     scope: {
@@ -11,16 +11,18 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', '$compile', fu
           filterTpl = '<tr ng-show="showFilters"><th></th>',
           cols = angular.element(element[0].children[0]).find('td'),
           ColName,
-          colName;
+          colName,
+          fieldName;
 
       headerTpl += '<th><input type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/></th>';
 
       for(var i=1; i<cols.length -1; i++) {
-        ColName = cols[i].title;
+        ColName = angular.element(cols[i]).data('title');
         colName = ColName.charAt(0).toLowerCase() + ColName.slice(1);
+        fieldName = angular.element(cols[i]).data('field') || colName;
 
-        headerTpl += '<th><a ng-click="sort(\'' + colName + '\')">' + ColName + '<span ng-show="sortBy == \'' + colName + '\'" ng-class="{\'caret-up\': asc}" class="caret"></span></a></th>';
-        filterTpl += '<th><input class="form-control" ng-model="filters.' + colName + '" type="text" ng-change="filter(\'' + colName + '\')"/></th>';
+        headerTpl += '<th><a ng-click="sort(\'' + fieldName + '\')">' + ColName + '<span ng-show="sortBy == \'' + colName + '\'" ng-class="{\'caret-up\': asc}" class="caret"></span></a></th>';
+        filterTpl += '<th><input class="form-control" ng-model="filters.' + fieldName + '" type="text" ng-change="filter(\'' + fieldName + '\')"/></th>';
       }
 
       headerTpl += '<th></th></tr>';
@@ -56,7 +58,7 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', '$compile', fu
       element.addClass('table table-simple table-bordered');
 
       // link function
-      return function(scope, element, $attr) {
+      return function(scope) {
         var itemCount = scope.count || 10;
 
         scope.currentPage = 0;
