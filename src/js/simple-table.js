@@ -131,7 +131,6 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
           scope.calcPages(0);
         };
 
-        // show batch actions if an item is selected
         scope.$watch(attrs.sTable, function(items) {
           scope.showBatchActions = false;
 
@@ -142,6 +141,8 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
               return;
             }
           });
+
+          scope.calcPages(scope.currentPage);
         }, true);
 
         // init first page
