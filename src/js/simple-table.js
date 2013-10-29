@@ -1,10 +1,6 @@
 angular.module('simpleTable', []).directive('sTable', ['$filter', function($filter) {
   return {
 		restrict: 'A',
-    scope: {
-      _items: '=sTable',
-      count: '@'
-    },
     compile: function (element) {
       // create header template
       var headerTpl = '<thead><tr>',
@@ -59,8 +55,8 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
       element.addClass('table table-simple table-bordered');
 
       // link function
-      return function(scope) {
-        var itemCount = scope.count || 10;
+      return function(scope, element, attrs) {
+        scope._count = parseInt(attrs.count, 10) || 10;
 
         scope.currentPage = 0;
         scope.batchAction = '';
@@ -87,22 +83,21 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
               break;
             }
             if (!hasFilters) {
-              items = scope._items;
+              items = scope[attrs.sTable];
             }
           }
 
-          scope.pageCount = items.length / itemCount;
-
+          scope.pageCount = items.length / scope._count;
           scope.pages = [];
           for(var i=0; i<scope.pageCount; i++) {
-            scope.pages.push(items.slice((i * itemCount), (i * itemCount) + itemCount));
+            scope.pages[i] = items.slice(i * scope._count, ((i * scope._count) + scope._count));
           }
 
           scope.setPage(page);
         };
 
         scope.toggleAll = function() {
-          scope.$parent.showBatchActions = !scope.$parent.showBatchActions;
+          scope.showBatchActions = !scope.showBatchActions;
           angular.forEach(scope.items, function(item) {
             item.selected = scope.isToggled;
           });
@@ -127,22 +122,22 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
         scope.sort = function(name) {
           scope.asc = !scope.asc;
           scope.sortBy = name;
-          scope._items = $filter('orderBy')(scope._items, name, scope.asc);
+          scope[attrs.sTable] = $filter('orderBy')(scope[attrs.sTable], name, scope.asc);
           scope.calcPages(scope.currentPage);
         };
 
         scope.filter = function() {
-          scope.filteredItems = $filter('filter')(scope._items, scope.filters);
+          scope.filteredItems = $filter('filter')(scope[attrs.sTable], scope.filters);
           scope.calcPages(0);
         };
 
         // show batch actions if an item is selected
-        scope.$watch('_items', function(items) {
-          scope.$parent.showBatchActions = false;
+        scope.$watch(attrs.sTable, function(items) {
+          scope.showBatchActions = false;
 
           angular.forEach(items, function(item) {
             if (item.selected) {
-              scope.$parent.showBatchActions = true;
+              scope.showBatchActions = true;
 
               return;
             }
