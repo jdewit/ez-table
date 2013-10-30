@@ -1,4 +1,4 @@
-angular.module('simpleTable', []).directive('sTable', ['$filter', function($filter) {
+angular.module('easyTable', []).directive('ezTable', ['$filter', function($filter) {
   return {
 		restrict: 'A',
     compile: function (element) {
@@ -57,7 +57,7 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
       );
 
       // attach table classes
-      element.addClass('table table-simple table-bordered');
+      element.addClass('table easy-table table-bordered');
 
       // link function
       return function(scope, element, attrs) {
@@ -84,7 +84,7 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
               break;
             }
             if (!hasFilters) {
-              items = scope[attrs.sTable];
+              items = scope[attrs.ezTable];
             }
           }
 
@@ -123,16 +123,16 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
         scope.sort = function(name) {
           scope.asc = !scope.asc;
           scope.sortBy = name;
-          scope[attrs.sTable] = $filter('orderBy')(scope[attrs.sTable], name, scope.asc);
+          scope[attrs.ezTable] = $filter('orderBy')(scope[attrs.ezTable], name, scope.asc);
           scope.calcPages(scope.currentPage);
         };
 
         scope.filter = function() {
-          scope.filteredItems = $filter('filter')(scope[attrs.sTable], scope.filters);
+          scope.filteredItems = $filter('filter')(scope[attrs.ezTable], scope.filters);
           scope.calcPages(0);
         };
 
-        scope.$watch(attrs.sTable, function(items) {
+        scope.$watch(attrs.ezTable, function(items) {
           scope.showBatchActions = false;
 
           angular.forEach(items, function(item) {

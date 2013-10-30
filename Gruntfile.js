@@ -42,18 +42,9 @@ module.exports = function(grunt) {
               yuicompress: true
             },
             files: {
-              "dist/simple-table.min.css": "src/less/simple-table.less"
+              "dist/easy-table.min.css": "src/less/easy-table.less"
             }
           }
-        },
-        ngtemplates:  {
-            crmApp:      {
-                src:      'src/**/*.html',
-                dest:     'avro-table-tmpl.js'
-                //options:  {
-                  //url:    function(url) { return url.replace('client', ''); }
-                //}
-            }
         },
         uglify: {
             options: {
@@ -62,7 +53,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'dist/simple-table.min.js': [
+                    'dist/easy-table.min.js': [
                         'src/js/**/*.js'
                     ]
                 }

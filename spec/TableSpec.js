@@ -1,13 +1,13 @@
-describe('simple-table', function() {
+describe('easy-table', function() {
   var el, scope, rows;
 
-  beforeEach(module('simpleTable'));
+  beforeEach(module('easyTable'));
 
   beforeEach(inject(function($rootScope, $compile) {
       scope = $rootScope;
 
       el = angular.element(
-        '<table s-table="users" data-count="6">' +
+        '<table ez-table="users" data-count="6">' +
           '<tr ng-repeat="user in items">' +
             '<td><input type="checkbox" ng-model="user.selected"/></td>' +
             '<td data-title="First Name" data-field="firstName">{{ user.firstName }}</td>' +

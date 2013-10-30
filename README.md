@@ -23,7 +23,7 @@ Usage
 -----
 
 ```html
-<table s-table="users">
+<table ez-tableable="users">
   <tr ng-repeat="user in items">
     <td><input type="checkbox" ng-model="user.selected"/></td>
     <td data-title="Name">{{ user.name }}</td>

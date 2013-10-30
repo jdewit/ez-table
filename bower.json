@@ -1,7 +1,7 @@
 {
-  "name": "simple-table",
+  "name": "easy-table",
   "version": "0.0.0",
-  "main": "dist/simple-table.min.js",
+  "main": ["dist/easy-table.min.js", "dist/easy-table.min.css"],
   "ignore": [
     "**/.*",
     "node_modules",
