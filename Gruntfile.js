@@ -74,7 +74,7 @@ module.exports = function(grunt) {
               tasks: ['default'],
               options: {
                 livereload: 9090,
-              },
+              }
             }
         }
     });

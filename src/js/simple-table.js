@@ -65,11 +65,7 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
 
         scope.setPage = function(page)  {
           scope.currentPage = page;
-          scope.items  = scope.pages[page];
-
-          if (scope.isToggled) {
-            scope.isToggled = false;
-          }
+          scope.items = scope.pages[page];
         };
 
         scope.calcPages = function(page) {
@@ -98,8 +94,8 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
 
         scope.toggleAll = function() {
           scope.showBatchActions = !scope.showBatchActions;
-          angular.forEach(scope.items, function(item) {
-            item.selected = scope.isToggled;
+          angular.forEach(scope.items, function(item, i) {
+            scope.items[i].selected = scope.isToggled;
           });
         };
 
