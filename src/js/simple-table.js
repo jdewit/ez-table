@@ -14,6 +14,11 @@ angular.module('simpleTable', []).directive('sTable', ['$filter', function($filt
 
       for(var i=1; i<cols.length -1; i++) {
         ColName = angular.element(cols[i]).data('title');
+
+        if (!ColName) {
+          throw new Error('data-title attribute must be specified for column "' + i + '"');
+        }
+
         colName = ColName.charAt(0).toLowerCase() + ColName.slice(1);
         fieldName = angular.element(cols[i]).data('field') || colName;
 
