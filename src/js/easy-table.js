@@ -84,7 +84,7 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
               break;
             }
             if (!hasFilters) {
-              items = scope[attrs.ezTable];
+              items = scope.$eval(attrs.ezTable);
             }
           }
 
