@@ -1,4 +1,11 @@
-angular.module('easyTable', []).directive('ezTable', ['$filter', function($filter) {
+angular.module('easyTable', [])
+
+.constant('EasyTableConfig', {
+  limit: 10,
+  limits: [5, 10, 25, 100]
+})
+
+.directive('ezTable', ['$filter', 'EasyTableConfig', function($filter, EasyTableConfig) {
   return {
 		restrict: 'A',
     compile: function (element) {
@@ -29,7 +36,6 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
       headerTpl += '<th></th></tr>';
       filterTpl += '<th></th></tr>';
 
-
       headerTpl += filterTpl + '</thead>';
 
       element.prepend(headerTpl);
@@ -44,6 +50,7 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
             '<li ng-class="{disabled: currentPage == (pageCount - 1)}"><a ng-click="next()">&raquo;</a></li>' +
           '</ul>' +
           '<button class="filter-toggle btn btn-sm btn-default pull-right" ng-click="showFilters = !showFilters"><i class="icon-search"></i>Search</button>' +
+          '<select class="form-control input-sm table-limit-select pull-right" ng-model="_limit" ng-options="v for v in _limits"></select>' +
         '</td>' +
       '</tfoot>';
 
@@ -61,7 +68,9 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
 
       // link function
       return function(scope, element, attrs) {
-        scope._count = parseInt(attrs.count, 10) || 10;
+        scope._limit = parseInt(attrs.limit, 10) || EasyTableConfig.limit;
+
+        scope._limits = scope.$eval(attrs.limits) || EasyTableConfig.limits;
 
         scope.currentPage = 0;
         scope.batchAction = '';
@@ -88,10 +97,10 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
             }
           }
 
-          scope.pageCount = items.length / scope._count;
+          scope.pageCount = items.length / scope._limit;
           scope.pages = [];
           for(var i=0; i<scope.pageCount; i++) {
-            scope.pages[i] = items.slice(i * scope._count, ((i * scope._count) + scope._count));
+            scope.pages[i] = items.slice(i * scope._limit, ((i * scope._limit) + scope._limit));
           }
 
           scope.setPage(page);
@@ -131,6 +140,10 @@ angular.module('easyTable', []).directive('ezTable', ['$filter', function($filte
           scope.filteredItems = $filter('filter')(scope[attrs.ezTable], scope.filters);
           scope.calcPages(0);
         };
+
+        scope.$watch('_limit', function(val) {
+          scope.calcPages(scope.currentPage);
+        });
 
         scope.$watch(attrs.ezTable, function(items) {
           scope.showBatchActions = false;

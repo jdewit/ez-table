@@ -28,3 +28,6 @@ table.easy-table .caret.caret-up {
   border-bottom: 4px solid #000;
   content: "";
 }
+table.easy-table .table-limit-select {
+  width: 60px;
+}
