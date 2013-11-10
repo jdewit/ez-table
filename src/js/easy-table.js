@@ -93,7 +93,8 @@ angular.module('easyTable', [])
               break;
             }
             if (!hasFilters) {
-              items = $filter('orderBy')(scope.$eval(attrs.ezTable), '', true);
+              console.log('no filters');
+              items = $filter('orderBy')(scope.$eval(attrs.ezTable), '$index', true);
             }
           }
 
@@ -132,7 +133,7 @@ angular.module('easyTable', [])
         scope.sort = function(name) {
           scope.asc = !scope.asc;
           scope.sortBy = name;
-          scope[attrs.ezTable] = $filter('orderBy')(scope[attrs.ezTable], name, scope.asc);
+          scope[attrs.ezTable] = $filter('orderBy')(scope.$eval(attrs.ezTable), name, scope.asc);
           scope.calcPages(scope.currentPage);
         };
 
@@ -141,8 +142,10 @@ angular.module('easyTable', [])
           scope.calcPages(0);
         };
 
-        scope.$watch('_limit', function(val) {
-          scope.calcPages(scope.currentPage);
+        scope.$watch('_limit', function(newVal, oldVal) {
+          if (newVal !== oldVal) {
+            scope.calcPages(scope.currentPage);
+          }
         });
 
         scope.$watch(attrs.ezTable, function(items) {
@@ -158,9 +161,6 @@ angular.module('easyTable', [])
 
           scope.calcPages(scope.currentPage);
         }, true);
-
-        // init first page
-        scope.calcPages(0);
       };
     }
   };
