@@ -55,7 +55,7 @@ describe('easy-table', function() {
   });
 
   it('it renders filter search toggle', function() {
-    expect(el.find('tfoot button').text()).toBe('Search');
+    expect(el.find('tfoot .sort-container a').text()).toBe('Search');
   });
 
   it('template should bind the users', function() {
@@ -133,9 +133,9 @@ describe('easy-table', function() {
       expect(item.selected).toBe(true);
     });
 
-    expect(el.next().hasClass('well')).toBe(true);
-    expect(el.next().find('button:first-child').text()).toBe('Edit');
-    expect(el.next().find('button:nth-child(2)').text()).toBe('Delete');
+    expect(el.find('.batch-actions').hasClass('ng-hide')).toBe(false);
+    expect(el.find('.batch-actions a:first-child').text()).toBe('Edit');
+    expect(el.find('.batch-actions a:nth-child(2)').text()).toBe('Delete');
   });
 
   it('Should toggle off all rows on repeat toggle all click', function() {

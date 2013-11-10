@@ -10,6 +10,7 @@ angular.module('easyTable', [])
 .directive('ezTable', ['$filter', 'EasyTableConfig', function($filter, EasyTableConfig) {
   return {
 		restrict: 'A',
+    scope: true,
     compile: function (element) {
       // create header template
       var headerTpl = '<thead><tr>',
@@ -44,34 +45,37 @@ angular.module('easyTable', [])
 
       // create footer template
       var footerTpl = '<tfoot><tr>' +
-        '<td colspan="100%">' +
+        '<td>' +
           '<input type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/>' +
-          '<ul ng-show="pageCount > 1" class="pagination pagination-sm">' +
-            '<li ng-class="{disabled: currentPage == 0}"><a ng-click="prev()">&laquo;</a></li>' +
-            '<li ng-class="{active: currentPage == $index}" ng-repeat="page in pages"><a ng-click="setPage($index)">{{ $index + 1 }}</a></li>' +
-            '<li ng-class="{disabled: currentPage == (pageCount - 1)}"><a ng-click="next()">&raquo;</a></li>' +
-          '</ul>' +
-          '<button class="filter-toggle btn btn-sm btn-default pull-right" ng-click="showFilters = !showFilters"><i class="icon-search"></i>Search</button>' +
-          '<select class="form-control input-sm table-limit-select pull-right" ng-model="_limit" ng-options="v for v in _limits"></select>' +
+        '</td>' +
+        '<td colspan="100%">' +
+          '<span class="pagination-container">' +
+            '<ul ng-show="pageCount > 1" class="pagination pagination-sm">' +
+              '<li ng-class="{disabled: currentPage == 0}"><a ng-click="prev()">&laquo;</a></li>' +
+              '<li ng-class="{active: currentPage == $index}" ng-repeat="page in pages"><a ng-click="setPage($index)">{{ $index + 1 }}</a></li>' +
+              '<li ng-class="{disabled: currentPage == (pageCount - 1)}"><a ng-click="next()">&raquo;</a></li>' +
+            '</ul>' +
+          '</span>' +
+          '<span class="batch-actions" ng-show="showBatchActions">' +
+            '<a class="btn btn-sm btn-default" ng-click="batchEdit()" title="Batch Edit"><i class="icon-pencil"></i><span>Edit</span></a>' +
+            '<a class="btn btn-sm btn-danger" ng-click="batchDelete()" title="Batch Delete"><i class="icon-remove"></i><span>Delete</span></a>' +
+          '</span>' +
+          '<span class="sort-container">' +
+            '<a class="filter-toggle btn btn-sm btn-default" ng-click="showFilters = !showFilters" title="Toggle Filters"><i class="icon-search"></i><span>Search</span></a>' +
+            '<select class="form-control input-sm table-limit-select" ng-model="limit" ng-options="v for v in limits" title="Set Limit"></select>' +
+          '</span>' +
         '</td>' +
       '</tfoot>';
 
       element.append(footerTpl);
-
-      element.after(
-        '<div ng-show="showBatchActions" class="well">' +
-          '<button class="btn btn-sm btn-default" ng-click="batchEdit()"><i class="icon-pencil"></i>Edit</button>' +
-          '<button class="btn btn-sm btn-danger" ng-click="batchDelete()"><i class="icon-remove"></i>Delete</button>' +
-        '</div>'
-      );
 
       // attach table classes
       element.addClass('table easy-table table-bordered');
 
       // link function
       return function(scope, element, attrs) {
-        scope._limit = parseInt(attrs.limit, 10) || EasyTableConfig.limit;
-        scope._limits = scope.$eval(attrs.limits) || EasyTableConfig.limits;
+        scope.limit = parseInt(attrs.limit, 10) || EasyTableConfig.limit;
+        scope.limits = scope.$eval(attrs.limits) || EasyTableConfig.limits;
         scope.sortField = scope.$eval(attrs.sortField) || EasyTableConfig.sortField;
         scope.sortAscending = scope.$eval(attrs.sortAscending) || EasyTableConfig.sortAscending;
 
@@ -102,10 +106,10 @@ angular.module('easyTable', [])
             items = $filter('orderBy')(items, scope.sortField, !scope.sortAscending);
           }
 
-          scope.pageCount = items.length / scope._limit;
+          scope.pageCount = items.length / scope.limit;
           scope.pages = [];
           for(var i=0; i<scope.pageCount; i++) {
-            scope.pages[i] = items.slice(i * scope._limit, ((i * scope._limit) + scope._limit));
+            scope.pages[i] = items.slice(i * scope.limit, ((i * scope.limit) + scope.limit));
           }
 
           scope.setPage(page);
@@ -144,7 +148,7 @@ angular.module('easyTable', [])
           scope.calcPages(0);
         };
 
-        scope.$watch('_limit', function(newVal, oldVal) {
+        scope.$watch('limit', function(newVal, oldVal) {
           if (newVal !== oldVal) {
             scope.calcPages(scope.currentPage);
           }
