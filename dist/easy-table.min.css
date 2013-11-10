@@ -1,7 +1,7 @@
-table.easy-table td:first-child {
+table.easy-table th:first-child {
   width: 50px;
 }
-table.easy-table td:last-child {
+table.easy-table th:last-child {
   width: 125px;
 }
 table.easy-table th {
