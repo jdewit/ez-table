@@ -16,7 +16,7 @@ Features
 Demo
 ----
 
-http://plnkr.co/edit/upx6c3?p=preview
+http://plnkr.co/edit/npSZGD?p=preview
 
 Usage 
 -----
