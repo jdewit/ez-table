@@ -2,7 +2,9 @@ angular.module('easyTable', [])
 
 .constant('EasyTableConfig', {
   limit: 10,
-  limits: [5, 10, 25, 100]
+  limits: [5, 10, 25, 100],
+  sortField: null,
+  sortAscending: false
 })
 
 .directive('ezTable', ['$filter', 'EasyTableConfig', function($filter, EasyTableConfig) {
@@ -29,7 +31,7 @@ angular.module('easyTable', [])
         colName = ColName.charAt(0).toLowerCase() + ColName.slice(1);
         fieldName = angular.element(cols[i]).data('field') || colName;
 
-        headerTpl += '<th><a ng-click="sort(\'' + fieldName + '\')">' + ColName + '<span ng-show="sortBy == \'' + colName + '\'" ng-class="{\'caret-up\': asc}" class="caret"></span></a></th>';
+        headerTpl += '<th><a ng-click="sort(\'' + fieldName + '\')">' + ColName + '<span ng-show="sortField == \'' + colName + '\'" ng-class="{\'caret-up\': !sortAscending}" class="caret"></span></a></th>';
         filterTpl += '<th><input class="form-control" ng-model="filters.' + fieldName + '" type="text" ng-change="filter(\'' + fieldName + '\')"/></th>';
       }
 
@@ -69,12 +71,13 @@ angular.module('easyTable', [])
       // link function
       return function(scope, element, attrs) {
         scope._limit = parseInt(attrs.limit, 10) || EasyTableConfig.limit;
-
         scope._limits = scope.$eval(attrs.limits) || EasyTableConfig.limits;
+        scope.sortField = scope.$eval(attrs.sortField) || EasyTableConfig.sortField;
+        scope.sortAscending = scope.$eval(attrs.sortAscending) || EasyTableConfig.sortAscending;
+
 
         scope.currentPage = 0;
         scope.batchAction = '';
-        scope.asc = true;
         scope.filters = {};
 
         scope.setPage = function(page)  {
@@ -85,17 +88,18 @@ angular.module('easyTable', [])
         scope.calcPages = function(page) {
           var items = [];
 
-          if (scope.filteredItems && scope.filteredItems.length) {
-            items = scope.filteredItems;
+          for (var hasFilters in scope.filters) {
+            break;
+          }
+
+          if (hasFilters) {
+            items = $filter('filter')(scope.$eval(attrs.ezTable), scope.filters);
           } else {
-            //only load all items if there are no filters
-            for (var hasFilters in scope.filters) {
-              break;
-            }
-            if (!hasFilters) {
-              console.log('no filters');
-              items = $filter('orderBy')(scope.$eval(attrs.ezTable), '$index', true);
-            }
+            items = scope.$eval(attrs.ezTable);
+          }
+
+          if (scope.sortField) {
+            items = $filter('orderBy')(items, scope.sortField, !scope.sortAscending);
           }
 
           scope.pageCount = items.length / scope._limit;
@@ -131,14 +135,12 @@ angular.module('easyTable', [])
         };
 
         scope.sort = function(name) {
-          scope.asc = !scope.asc;
-          scope.sortBy = name;
-          scope[attrs.ezTable] = $filter('orderBy')(scope.$eval(attrs.ezTable), name, scope.asc);
+          scope.sortAscending = !scope.sortAscending;
+          scope.sortField = name;
           scope.calcPages(scope.currentPage);
         };
 
         scope.filter = function() {
-          scope.filteredItems = $filter('filter')(scope[attrs.ezTable], scope.filters);
           scope.calcPages(0);
         };
 
