@@ -21,8 +21,10 @@ http://plnkr.co/edit/npSZGD?p=preview
 Usage 
 -----
 
+Add 'ez.table' to your apps modules dependencies
+
 ```html
-<table ez-tableable="users">
+<table ez-table="users">
   <tr ng-repeat="user in items">
     <td><input type="checkbox" ng-model="user.selected"/></td>
     <td data-title="Name">{{ user.name }}</td>

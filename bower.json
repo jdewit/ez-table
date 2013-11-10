@@ -1,7 +1,7 @@
 {
-  "name": "easy-table",
+  "name": "ez-table",
   "version": "0.0.0",
-  "main": ["dist/easy-table.min.js", "dist/easy-table.min.css"],
+  "main": ["dist/ez-table.min.js", "dist/ez-table.min.css"],
   "ignore": [
     "**/.*",
     "node_modules",

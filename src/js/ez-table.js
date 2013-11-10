@@ -1,13 +1,13 @@
-angular.module('easyTable', [])
+angular.module('ez.table', [])
 
-.constant('EasyTableConfig', {
+.constant('EzTableConfig', {
   limit: 10,
   limits: [5, 10, 25, 100],
   sortField: null,
   sortAscending: false
 })
 
-.directive('ezTable', ['$filter', 'EasyTableConfig', function($filter, EasyTableConfig) {
+.directive('ezTable', ['$filter', 'EzTableConfig', function($filter, EzTableConfig) {
   return {
 		restrict: 'A',
     scope: true,
@@ -70,14 +70,14 @@ angular.module('easyTable', [])
       element.append(footerTpl);
 
       // attach table classes
-      element.addClass('table easy-table table-bordered');
+      element.addClass('table ez-table table-bordered');
 
       // link function
       return function(scope, element, attrs) {
-        scope.limit = parseInt(attrs.limit, 10) || EasyTableConfig.limit;
-        scope.limits = scope.$eval(attrs.limits) || EasyTableConfig.limits;
-        scope.sortField = scope.$eval(attrs.sortField) || EasyTableConfig.sortField;
-        scope.sortAscending = scope.$eval(attrs.sortAscending) || EasyTableConfig.sortAscending;
+        scope.limit = parseInt(attrs.limit, 10) || EzTableConfig.limit;
+        scope.limits = scope.$eval(attrs.limits) || EzTableConfig.limits;
+        scope.sortField = scope.$eval(attrs.sortField) || EzTableConfig.sortField;
+        scope.sortAscending = scope.$eval(attrs.sortAscending) || EzTableConfig.sortAscending;
 
 
         scope.currentPage = 0;

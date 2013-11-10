@@ -1,7 +1,7 @@
-describe('easy-table', function() {
+describe('ez-table', function() {
   var el, scope, rows;
 
-  beforeEach(module('easyTable'));
+  beforeEach(module('ez.table'));
 
   beforeEach(inject(function($rootScope, $compile) {
       scope = $rootScope;

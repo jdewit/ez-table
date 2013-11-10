@@ -42,7 +42,7 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          "dist/easy-table.min.css": "src/less/easy-table.less"
+          "dist/ez-table.min.css": "src/less/ez-table.less"
         }
       }
     },
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/easy-table.min.js': ['src/js/**/*.js']
+          'dist/ez-table.min.js': ['src/js/**/*.js']
         }
       }
     },

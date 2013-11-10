@@ -1,37 +1,37 @@
-table.easy-table th:first-child {
+table.ez-table th:first-child {
   width: 50px;
 }
-table.easy-table th:last-child {
+table.ez-table th:last-child {
   width: 125px;
 }
-table.easy-table th {
+table.ez-table th {
   text-align: center;
 }
-table.easy-table th a {
+table.ez-table th a {
   color: #000;
   cursor: pointer;
   text-decoration: none;
 }
-table.easy-table th .caret.caret-up {
+table.ez-table th .caret.caret-up {
   border-top: 0 dotted;
   border-bottom: 4px solid #000;
   content: "";
 }
-table.easy-table tbody td:first-child,
-table.easy-table tfoot td:first-child {
+table.ez-table tbody td:first-child,
+table.ez-table tfoot td:first-child {
   text-align: center;
 }
-table.easy-table tfoot td {
+table.ez-table tfoot td {
   padding: 2.5px 8px;
   height: 35px;
   text-align: left;
   position: relative;
 }
-table.easy-table tfoot td .batch-actions a {
+table.ez-table tfoot td .batch-actions a {
   margin-right: 5px;
   float: left;
 }
-table.easy-table tfoot td .pagination-container {
+table.ez-table tfoot td .pagination-container {
   position: absolute;
   text-align: center;
   left: 50%;
@@ -39,18 +39,18 @@ table.easy-table tfoot td .pagination-container {
   margin-left: -237.5px;
   top: 2.5px;
 }
-table.easy-table tfoot td .pagination {
+table.ez-table tfoot td .pagination {
   margin: 0;
 }
-table.easy-table tfoot td .sort-container a,
-table.easy-table tfoot td .sort-container select {
+table.ez-table tfoot td .sort-container a,
+table.ez-table tfoot td .sort-container select {
   float: right;
 }
-table.easy-table .table-limit-select {
+table.ez-table .table-limit-select {
   width: 60px;
 }
 @media (max-width: 767px) {
-  table.easy-table tfoot td .pagination-container {
+  table.ez-table tfoot td .pagination-container {
     display: block;
     position: relative;
     width: auto;
@@ -59,10 +59,10 @@ table.easy-table .table-limit-select {
   }
 }
 @media (max-width: 550px) {
-  table.easy-table tfoot td a i {
+  table.ez-table tfoot td a i {
     padding: 0;
   }
-  table.easy-table tfoot td a span {
+  table.ez-table tfoot td a span {
     display: none;
   }
 }
