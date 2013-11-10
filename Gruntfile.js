@@ -1,80 +1,78 @@
 'use_strict';
 
 module.exports = function(grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        jshint: {
-          options: {
-            curly: true,
-            eqeqeq: true,
-            eqnull: true,
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        browser: true,
+        globals: {
+          jQuery: true
+        },
+      },
+      src: {
+        options: {
+          node: true,
+          globals: {
+            it: true,
+            beforeEach: true,
+            expect: true,
+            element: true,
             browser: true,
-            globals: {
-              jQuery: true
-            },
-          },
-          src: {
-            options: {
-              node: true,
-              globals: {
-                it: true,
-                beforeEach: true,
-                expect: true,
-                element: true,
-                browser: true,
-                module: true,
-                spyOn: true,
-                inject: true,
-                repeater: true,
-                describe: true,
-                angular: true,
-                jQuery: true
-              }
-            },
-            files: {
-              src: ['src/**/*.js', 'spec/**/*.js']
-            },
+            module: true,
+            spyOn: true,
+            inject: true,
+            repeater: true,
+            describe: true,
+            angular: true,
+            jQuery: true
           }
         },
-        less: {
-          dist: {
-            options: {
-              yuicompress: true
-            },
-            files: {
-              "dist/easy-table.min.css": "src/less/easy-table.less"
-            }
-          }
+        files: {
+          src: ['src/**/*.js', 'spec/**/*.js']
         },
-        uglify: {
-            options: {
-                mangle: true,
-                compress: true
-            },
-            dist: {
-                files: {
-                    'dist/easy-table.min.js': [
-                        'src/js/**/*.js'
-                    ]
-                }
-            }
+      }
+    },
+    less: {
+      dist: {
+        options: {
+          yuicompress: true
         },
-        watch: {
-            dev: {
-              files: ['src/**/*'],
-              tasks: ['default'],
-              options: {
-                livereload: 9090,
-              }
-            }
+        files: {
+          "dist/easy-table.min.css": "src/less/easy-table.less"
         }
-    });
+      }
+    },
+    uglify: {
+      options: {
+        mangle: true,
+        compress: true
+      },
+      dist: {
+        files: {
+          'dist/easy-table.min.js': ['src/js/**/*.js']
+        }
+      }
+    },
+    watch: {
+      dev: {
+        files: ['src/**/*'],
+        tasks: ['default'],
+        options: {
+          livereload: 9090,
+        }
+      }
+    }
+  });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-    grunt.registerTask('default', ['jshint', 'uglify', 'less']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'less']);
 };

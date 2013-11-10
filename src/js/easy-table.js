@@ -93,7 +93,7 @@ angular.module('easyTable', [])
               break;
             }
             if (!hasFilters) {
-              items = scope.$eval(attrs.ezTable);
+              items = $filter('orderBy')(scope.$eval(attrs.ezTable), '', true);
             }
           }
 
