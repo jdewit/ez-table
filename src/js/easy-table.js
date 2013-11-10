@@ -150,7 +150,7 @@ angular.module('easyTable', [])
 
         scope.$watch('limit', function(newVal, oldVal) {
           if (newVal !== oldVal) {
-            scope.calcPages(scope.currentPage);
+            scope.calcPages(0);
           }
         });
 
