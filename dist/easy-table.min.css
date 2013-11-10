@@ -39,6 +39,9 @@ table.easy-table tfoot td .pagination-container {
   margin-left: -237.5px;
   top: 2.5px;
 }
+table.easy-table tfoot td .pagination {
+  margin: 0;
+}
 table.easy-table tfoot td .sort-container a,
 table.easy-table tfoot td .sort-container select {
   float: right;
