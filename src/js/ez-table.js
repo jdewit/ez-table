@@ -20,7 +20,7 @@ angular.module('ez.table', [])
           colName,
           fieldName;
 
-      headerTpl += '<th><input type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/></th>';
+      headerTpl += '<th><input class="batch-checkbox" type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/></th>';
 
       for(var i=1; i<cols.length -1; i++) {
         ColName = angular.element(cols[i]).data('title');
@@ -46,7 +46,7 @@ angular.module('ez.table', [])
       // create footer template
       var footerTpl = '<tfoot><tr>' +
         '<td>' +
-          '<input type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/>' +
+          '<input class="batch-checkbox" type="checkbox" ng-model="isToggled" ng-change="toggleAll()"/>' +
         '</td>' +
         '<td colspan="100%">' +
           '<span class="pagination-container">' +
@@ -116,7 +116,6 @@ angular.module('ez.table', [])
         };
 
         scope.toggleAll = function() {
-          scope.showBatchActions = !scope.showBatchActions;
           angular.forEach(scope.items, function(item, i) {
             scope.items[i].selected = scope.isToggled;
           });
@@ -157,11 +156,14 @@ angular.module('ez.table', [])
         scope.$watch(attrs.ezTable, function(items) {
           scope.showBatchActions = false;
 
-          angular.forEach(items, function(item) {
+          var count = items.length;
+          angular.forEach(items, function(item, i) {
             if (item.selected) {
               scope.showBatchActions = true;
 
               return;
+            } else if ((i + 1) === count) {
+              scope.isToggled = false;
             }
           });
 
