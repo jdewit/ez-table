@@ -96,14 +96,14 @@ angular.module('ez.table', [])
             break;
           }
 
-          if (hasFilters) {
-            items = $filter('filter')(scope.$eval(attrs.ezTable), scope.filters);
+          if (scope.sortField) {
+            items = $filter('orderBy')(scope.$eval(attrs.ezTable), scope.sortField, !scope.sortAscending);
           } else {
             items = scope.$eval(attrs.ezTable);
           }
 
-          if (scope.sortField) {
-            items = $filter('orderBy')(items, scope.sortField, !scope.sortAscending);
+          if (hasFilters) {
+            items = $filter('filter')(items, scope.filters);
           }
 
           scope.pageCount = items.length / scope.limit;
