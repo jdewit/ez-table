@@ -15,7 +15,7 @@ angular.module('ez.table', [])
       // create header template
       var headerTpl = '<thead><tr>',
           filterTpl = '<tr ng-show="showFilters"><th></th>',
-          cols = angular.element(element[0].children[0]).find('td'),
+          cols = element.find('tbody tr:first-child td'),
           ColName,
           colName,
           fieldName;
