@@ -1,6 +1,6 @@
 {
   "name": "ez-table",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": ["dist/ez-table.min.js", "dist/ez-table.min.css"],
   "ignore": [
     "**/.*",
