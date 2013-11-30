@@ -57,8 +57,8 @@ angular.module('ez.table', [])
             '</ul>' +
           '</span>' +
           '<span class="batch-actions" ng-show="showBatchActions">' +
-            '<a class="btn btn-sm btn-default" ng-click="batchEdit()" title="Batch Edit"><i class="icon-pencil"></i><span>Edit</span></a>' +
-            '<a class="btn btn-sm btn-danger" ng-click="batchDelete()" title="Batch Delete"><i class="icon-remove"></i><span>Delete</span></a>' +
+            '<a id="batchEdit" class="btn btn-sm btn-default" ng-click="batchEdit()" title="Batch Edit"><i class="icon-pencil"></i><span>Edit</span></a>' +
+            '<a id="batchDelete" class="btn btn-sm btn-danger" ng-click="batchDelete()" title="Batch Delete"><i class="icon-remove"></i><span>Delete</span></a>' +
           '</span>' +
           '<span class="sort-container">' +
             '<a class="filter-toggle btn btn-sm btn-default" ng-click="showFilters = !showFilters" title="Toggle Filters"><i class="icon-search"></i><span>Search</span></a>' +
