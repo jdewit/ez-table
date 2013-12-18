@@ -9,7 +9,7 @@ describe('ez-table', function() {
       el = angular.element(
         '<table ez-table="users" data-limit="6">' +
           '<tr ng-repeat="user in items">' +
-            '<td><input type="checkbox" ng-model="user.selected"/></td>' +
+            '<td><input type="checkbox" ng-model="user._selected"/></td>' +
             '<td data-title="First Name" data-field="firstName">{{ user.firstName }}</td>' +
             '<td data-title="Last Name" data-field="lastName">{{ user.lastName }}</td>' +
             '<td><a><i class="icon-pencil">Edit</a></td>' +
@@ -130,7 +130,7 @@ describe('ez-table', function() {
   it('Should toggle all rows on toggle all click and show batch actions', function() {
     el.find('thead input[type="checkbox"]').click();
     angular.forEach(el.scope().items, function(item) {
-      expect(item.selected).toBe(true);
+      expect(item._selected).toBe(true);
     });
 
     expect(el.find('.batch-actions').hasClass('ng-hide')).toBe(false);
@@ -141,7 +141,7 @@ describe('ez-table', function() {
   it('Should toggle off all rows on repeat toggle all click', function() {
     el.find('thead input[type="checkbox"]').attr('checked', false).trigger('input');
     angular.forEach(el.scope().items, function(item) {
-      expect(item.selected).not.toBe(true);
+      expect(item._selected).not.toBe(true);
     });
   });
 

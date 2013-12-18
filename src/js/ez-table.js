@@ -117,7 +117,7 @@ angular.module('ez.table', [])
 
         scope.toggleAll = function() {
           angular.forEach(scope.items, function(item, i) {
-            scope.items[i].selected = scope.isToggled;
+            scope.items[i]._selected = scope.isToggled;
           });
         };
 
@@ -158,7 +158,7 @@ angular.module('ez.table', [])
 
           var count = items.length;
           angular.forEach(items, function(item, i) {
-            if (item.selected) {
+            if (item._selected) {
               scope.showBatchActions = true;
 
               return;
