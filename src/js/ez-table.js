@@ -156,6 +156,10 @@ angular.module('ez.table', [])
         scope.$watch(attrs.ezTable, function(items) {
           scope.showBatchActions = false;
 
+          if (!angular.isArray(items)) {
+            return;
+          }
+
           var count = items.length;
           angular.forEach(items, function(item, i) {
             if (item._selected) {

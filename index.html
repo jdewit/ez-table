@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="dist/ez-table.min.css">
+
+  <style>
+    a i {
+     padding-right: 5px; 
+    }
+  </style>
+
+</head>
+
+<body ng-app="myApp">
+  <div ng-controller="RootCtrl">
+    <div class="page-header">
+      <h1>Ez-Table</h1>
+    </div>
+    <table ez-table="users" data-count="4">
+      <tr ng-repeat="user in items">
+        <td>
+          <input type="checkbox" ng-model="user.selected" />
+        </td>
+        <td data-title="Name">{{ user.name }}</td>
+        <td data-title="Last Name" data-field="lastName">{{ user.lastName }}</td>
+        <td><a class="btn btn-default" ng-click="edit(user)"><i class="icon-pencil"></i>Edit</a>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <h3>Data from object</h3>
+    <table ez-table="users2" data-count="4">
+      <tr ng-repeat="user in items">
+        <td>
+          <input type="checkbox" ng-model="user.selected" />
+        </td>
+        <td data-title="Name">{{ user.name }}</td>
+        <td data-title="Last Name" data-field="lastName">{{ user.lastName }}</td>
+        <td><a class="btn btn-default" ng-click="edit(user)"><i class="icon-pencil"></i>Edit</a>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//code.angularjs.org/1.2.15/angular.js"></script>
+
+  <script src="src/js/ez-table.js"></script>
+  <script>
+    angular.module('myApp', ['ez.table']).controller('RootCtrl', ['$scope', '$filter','$timeout',
+      function($scope, $filter,$timeout) {
+        $scope.users = [];
+        
+        $scope.edit = function(user) {
+          alert('Edit ' + user.name);
+        };
+        
+        var tempData= [{
+          name: "Joe",
+          lastName: "Carter"
+        }, {
+          name: "Bob",
+          lastName: "Barker"
+        }, {
+          name: "Peter",
+          lastName: "Griffin"
+        }, {
+          name: "Don",
+          lastName: "Cherry"
+        }, {
+          name: "Bobby",
+          lastName: "Fillet"
+        }, {
+          name: "Joey",
+          lastName: "Diaz"
+        }, {
+          name: "Zoe",
+          lastName: "Dejavous"
+        }, {
+          name: "Tom",
+          lastName: "Jones"
+        }];
+
+        var tempData2 = {};
+        tempData2['joe'] = {name: 'Joe', lastName: 'Carter'};
+        tempData2['bob'] = {name: 'Bob', lastName: 'Barker'};
+
+        
+        $timeout(function() { // simulate getting items async
+          $scope.users = tempData;
+
+          $scope.users2 = tempData2;
+        }, 500);
+        
+        $scope.batchEdit = function() {
+          var selected = $filter('filter')($scope.users, {selected: true});
+          console.log(selected);
+          alert('Batch edit! Check the console.');
+        };
+        
+        $scope.batchDelete = function() {
+          var selected = $filter('filter')($scope.users, {selected: true});
+          console.log(selected);
+          alert('Batch delete! Check the console.');
+        };
+      }
+    ]);
+  </script>
+</body>
+
+</html>
